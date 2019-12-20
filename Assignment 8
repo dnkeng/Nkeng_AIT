@@ -5,7 +5,7 @@
 
 rm(list=ls())
 
-data <- read.csv('~/Downloads/AIT580-master 2/data/EmployeeAttrition.csv')
+data <- read.csv('~/Downloads/AIT580-master 2/Assignment_8 Nkeng D/data/EmployeeAttrition.csv')
 
 # this is just for testing to use "print" statement.
 print(data[1,])
@@ -14,45 +14,45 @@ print(data[1,])
 
 # a. Find the number of rows and columns in the dataset (5 points)
 
-row(mydata)
-col(mydata)
-nrow(mydata)
-ncol(mydata)
+row(data)
+col(data)
+nrow(data)
+ncol(data)
 # b. Find the maximum Age in the dataset (5 points)
-max(mydata$Age)
+max(data$Age)
 
 
 # c. Find the minimum DailyRate in the dataset (5 points)
-min(mydata$DailyRate)
+min(data$DailyRate)
 
 
 # d. Find the average/mean MontlyIncome in the dataset (5 points)
-mean(mydata$MonthlyIncome)
+mean(data$MonthlyIncome)
 
 # e. How many employees rated WorkLifeBalance as 1 (5 points)
-mycount<-mydata$WorkLifeBalance
+mycount<-data$WorkLifeBalance
 library(plyr)
-mycount(coun,1)
+count(mycount,1)
 #or
-sum(mydata$WorkLifeBalance == 1)
+sum(data$WorkLifeBalance == 1)
 
 
 # f. What percent of total employees have TotalWorkingYears less than equal to 5? Also calculate the percentage for TotalWorkingYears greater than 5 (5 points)
-totalworkyearA<-sum(mydata$TotalWorkingYears<=5)
-totalworkyearB<-sum(mydata$TotalWorkingYears>5)
+totalworkyearA<-sum(data$TotalWorkingYears<=5)
+totalworkyearB<-sum(data$TotalWorkingYears>5)
 percentA<-(totalworkyearA/1470)*100
 percentB<-(totalworkyearB/1470)*100
 percentA
 percentB
 
 # g. PrintEmployeeNumber, Department and MaritalStatus for those employees whose Attrition is Yes and RelationshipSatisfaction is 1 and YearsSinceLastPromotion is greater than 3 (10 points)
-mydata[(mydata$Attrition=='Yes') & (mydata$RelationshipSatisfaction==1) & (mydata$YearsSinceLastPromotion>3),c(10,5,18)]
+data[(data$Attrition=='Yes') & (data$RelationshipSatisfaction==1) & (data$YearsSinceLastPromotion>3),c(10,5,18)]
 
 # h. Find the mean, median, mode, standard deviation and frequency distribution of EnvironmentSatisfaction for males and females separately. (Hint: For frequency distribution use table() function (10 points)
 #for data separation
 
-males<- subset(mydata, mydata$Gender== 'Male')
-females<-subset(mydata, mydata$Gender== 'Female')
+males<- subset(data, data$Gender== 'Male')
+females<-subset(data, data$Gender== 'Female')
 
 #Mode Function
 
@@ -83,7 +83,7 @@ ftable(females$EnvironmentSatisfaction)
 
 #######################PART2 (Acme dataset) ###############################
 # csv file loading
-mydata1 <- read.csv('~/Downloads/AIT580-master 2/data/Acme.csv')
+mydata1 <- read.csv('~/Downloads/AIT580-master 2/Assignment_8 Nkeng D/data/Acme.csv')
 
 
 # Allocating the data
