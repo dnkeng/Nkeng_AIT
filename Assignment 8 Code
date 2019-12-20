@@ -1,0 +1,154 @@
+###--------------------------------------
+#Student Name:Nkeng A. Derek
+#GNumber:G01168191
+###--------------------------------------
+
+rm(list=ls())
+
+data <- read.csv('~/Downloads/AIT580-master 2/Assignment_8 Nkeng D/data/EmployeeAttrition.csv')
+
+# this is just for testing to use "print" statement.
+print(data[1,])
+
+
+
+# a. Find the number of rows and columns in the dataset (5 points)
+
+row(data)
+col(data)
+nrow(data)
+ncol(data)
+# b. Find the maximum Age in the dataset (5 points)
+max(data$Age)
+
+
+# c. Find the minimum DailyRate in the dataset (5 points)
+min(data$DailyRate)
+
+
+# d. Find the average/mean MontlyIncome in the dataset (5 points)
+mean(data$MonthlyIncome)
+
+# e. How many employees rated WorkLifeBalance as 1 (5 points)
+mycount<-data$WorkLifeBalance
+library(plyr)
+count(mycount,1)
+#or
+sum(data$WorkLifeBalance == 1)
+
+
+# f. What percent of total employees have TotalWorkingYears less than equal to 5? Also calculate the percentage for TotalWorkingYears greater than 5 (5 points)
+totalworkyearA<-sum(data$TotalWorkingYears<=5)
+totalworkyearB<-sum(data$TotalWorkingYears>5)
+percentA<-(totalworkyearA/1470)*100
+percentB<-(totalworkyearB/1470)*100
+percentA
+percentB
+
+# g. PrintEmployeeNumber, Department and MaritalStatus for those employees whose Attrition is Yes and RelationshipSatisfaction is 1 and YearsSinceLastPromotion is greater than 3 (10 points)
+data[(data$Attrition=='Yes') & (data$RelationshipSatisfaction==1) & (data$YearsSinceLastPromotion>3),c(10,5,18)]
+
+# h. Find the mean, median, mode, standard deviation and frequency distribution of EnvironmentSatisfaction for males and females separately. (Hint: For frequency distribution use table() function (10 points)
+#for data separation
+
+males<- subset(data, data$Gender== 'Male')
+females<-subset(data, data$Gender== 'Female')
+
+#Mode Function
+
+mode = function(x){ unx=unique(x) 
+unx[which.max(tabulate(match(x,unx)))]}
+
+
+#Males
+
+mean(males$EnvironmentSatisfaction)
+median(males$EnvironmentSatisfaction)
+mode(males$EnvironmentSatisfaction)
+sd(males$EnvironmentSatisfaction)
+summary(males$EnvironmentSatisfaction)
+
+#Females
+
+mean(females$EnvironmentSatisfaction)
+median(females$EnvironmentSatisfaction)
+mode(females$EnvironmentSatisfaction)
+sd(females$EnvironmentSatisfaction)
+summary(females$EnvironmentSatisfaction)
+
+#Frequency Distribution for Male and Female
+
+ftable(males$EnvironmentSatisfaction)
+ftable(females$EnvironmentSatisfaction)
+
+#######################PART2 (Acme dataset) ###############################
+# csv file loading
+mydata1 <- read.csv('~/Downloads/AIT580-master 2/Assignment_8 Nkeng D/data/Acme.csv')
+
+
+# Allocating the data
+year<-mydata1$Years
+salary<-mydata1$StSalary
+gender<-mydata1$Gender
+degree<-mydata1$Degree
+
+#1.Identify data types for each attribute in the dataset 
+typeof(year)
+typeof(salary)
+typeof(gender)
+typeof(degree)
+
+# 2.Produce a summary statistic for each attribute in the dataset 
+summary(year)
+summary(salary)
+summary(gender)
+summary(degree)
+
+# 3.Produce visualizations for each attribute
+hist(year, col='blue',main='Visualisation of Attribute- Year')
+hist(salary, col='red',main='Visualisation of Attribute- salary')
+plot(gender, col='blue',main='Visualisation of Attribute- Gender')
+plot(degree, col='red',main='Visualisation of Attribute- degree')
+
+# 4.Display the relationship between  
+#4a.Years of Experience and Starting Salary for all employees 
+library(ggplot2)
+ggplot(mydata1, aes(x=year,y=salary))+geom_point()+ggtitle('Years of Experience and Starting Salary for all employees')
+
+#4b.Years of Experience and Starting Salary for each gender
+ggplot(mydata1, aes(x=year,y=salary,color=gender))+geom_point()+ggtitle('Years of Experience and Starting Salary for each gender')
+
+#4c.Years of Experience and Starting Salary for each degree 
+ggplot(mydata1, aes(x=year,y=salary,shape=degree,color=degree))+geom_point()+ggtitle('Years of Experience and Starting Salary for each degree')
+
+# 5.Find the correlation between Starting Salary and Years of Experience?
+
+cor(mydata1$Years,mydata1$StSalary,method="pearson",use="complete.obs")
+cor.test(mydata1$Years, mydata1$StSalary)
+#5a.Is the correlation different for each gender?
+male<-subset(mydata1,mydata1$Gender=='M')
+female<-subset(mydata1,mydata1$Gender=='F')
+
+cor(male$Years,male$StSalary,method = "pearson", use="complete.obs")
+cor.test(male$Years, male$StSalary)
+
+cor(female$Years,female$StSalary,method = "pearson", use="complete.obs")
+cor.test(female$Years, female$StSalary)
+print("The  correlation male and female is diffenrnt which is 0.673858 and 0.7507096 repectively")
+
+
+#5b.Is the correlation different for each degree? 
+bs<-subset(mydata1,mydata1$Degree=="BS")
+ms<-subset(mydata1,mydata1$Degree=="MS")
+phd<-subset(mydata1,mydata1$Degree=="PhD")
+cor(bs$Years, bs$StSalary,  method = "pearson", use = "complete.obs")
+cor.test(bs$Years, bs$StSalary)
+cor(ms$Years, ms$StSalary,  method = "pearson", use ="complete.obs")
+cor.test(ms$Years, ms$StSalary)
+cor(phd$Years, phd$StSalary,  method = "pearson", use ="complete.obs")
+cor.test(phd$Years, phd$StSalary)
+print("The correlation for Ms and phd is same which is 0.04563974 ,and for bs it is 0.3560727")
+
+#6.What can you conclude about Acme with respect to gender bias after your overall analysis?
+print("by analysing the graph plotted against year vs salary of male and female we can come to conclusion that males were being paid higher salaries on an average")
+
